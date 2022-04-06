@@ -1,0 +1,32 @@
+.card-create{
+	width:min(80%,60vw);
+	margin:20px auto;
+	color:var(--btn-text-hover-color)
+}
+.card__input{
+	padding: 0.7rem 1rem;
+	width: 100%;
+	margin: 0.7rem 0;
+	box-sizing: border-box;
+	border: 1px solid var(--btn-upg-color);
+	border-radius:	var(--border-radius);
+}
+.input-description{
+	min-height: 100px;
+}
+
+.card__label{
+	padding-left: 4%;
+	display: block;
+	font-size: 25px;
+	font-size: var(--fz-status-text);
+}
+.card__title-large{
+	font-size: 30px;
+	display: flex;
+	justify-content: center;
+}
+
+.card__button-cancel:hover{
+	background-color: var(--btn-upg-color);
+}

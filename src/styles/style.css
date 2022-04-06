@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+:root{
+	--status-yellow-color: rgb(250, 218, 131);
+	--status-lightblue-color: rgb(156, 182, 209);
+	--btn-white-color: whitesmoke; 
+	--btn-hover-add-color: hsl(128, 37%, 71%); 
+	--btn-upg-color: rgba(168, 136, 211, 0.5);
+	--btn-del-color: rgba(255, 104, 107);
+	--btn-done-color: rgb(136, 211, 152, 0.5);
+	--btn-upg-hover-color: rgba(168, 136, 211);
+	--btn-prev-color: rgb(136, 181, 211,0.5);
+	--btn-prev-hover-color: rgb(136, 181, 211);
+	--btn-del-hover-color: rgba(248, 74, 77, 0.979);
+	--btn-done-hover-color: rgb(136, 211, 152);
+	--btn-text-color: rgb(99, 114, 116);
+	--btn-text-hover-color: rgb(99, 114, 116);
+	--btn-exit-color: rgb(60, 79, 112, 0.7);
+	--btn-exit-hover-color: rgb(60, 79, 112, 1);
+	--fz-status-text: 22px;
+	--fz-btn-text: 15px;
+	--border-radius: 20px;
+	--fz-small-btn-text:12px;
+}
+body{
+	margin: 0;
+	padding: 0;
+	font-family: 'Roboto', 'Open Sans', sans-serif;
+	line-height: 1.5;
+	word-wrap: break-word;
+}
+.card__button:hover,.button:hover{
+	cursor: pointer;
+}
+.button{
+	border:  1px solid rgba(54, 22, 87, 0.329);
+	border-radius: 15px;
+	padding: 0.5rem;
+	color: var(--btn-text-color);
+}

@@ -1,0 +1,18 @@
+.title__input{
+	width: 90%;
+}
+.text__input{
+	width: 100%;
+	margin: 1em 0;
+	margin-right: 10%;
+	font-size: 1rem;
+	max-width: 100%;
+	min-height: 150px;
+}
+
+.card__button-edit:hover{
+	background-color: var(--btn-hover-add-color);
+}
+.card__button-edit{
+	background-color: var(--btn-done-color);
+}

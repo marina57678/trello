@@ -1,0 +1,61 @@
+.card{
+	position: relative;
+	margin: 1rem 0;
+	padding: 1rem 1rem;
+	border: 1px solid var(--btn-upg-color);
+	border-radius: var(--border-radius);
+	background-color: rgba(240, 239, 235, 0.329);
+}
+.card__title{
+	display: block;
+	padding-right:10%;
+	font-size: var(--fz-status-text);
+}
+.card__buttons{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+}
+.card__button{
+	margin: 0 2%;
+}
+
+.card__button:hover{
+	color: var(--btn-text-hover-color);
+}
+.card__button-upg{
+	background-color: var(--btn-upg-color);
+}
+.card__button-upg:hover{
+	background-color: var(--btn-upg-hover-color);
+}
+.card__button-done{
+	background-color: var(--btn-done-color);
+}
+.card__button-prev{
+	background-color: var(--btn-prev-color);
+}
+.card__button-prev:hover{
+	background-color: var(--btn-prev-hover-color);
+}
+.card__button-done:hover{
+	background-color: var(--btn-done-hover-color);
+}
+.button.card__button-del{
+	position: absolute;
+	top: min(6%,1.5em);
+	right: min(6%,1.5em);
+}
+
+.card__button-del.button-del{
+	padding: 0.1em 0.5em 0.2em;
+	color: var(--btn-white-color);
+}
+
+.button-del{
+	background-color: var(--btn-del-color);
+}
+
+.button-del:hover{
+	background-color: var(--btn-del-hover-color);
+}

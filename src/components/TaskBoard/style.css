@@ -1,0 +1,29 @@
+.board{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+.card__button.exit__button{
+   width: 4rem;
+	height: 2.5rem;
+	background-color: var(--btn-exit-color);
+   color: var(--btn-white-color);
+}
+.card__button.exit__button:hover{
+	background-color: var(--btn-exit-hover-color);
+   color: var(--btn-white-color);
+}
+
+.header{
+   width: 100%;
+   height: 70px;
+	margin-bottom: 0.5rem;
+   display: flex;
+   align-items: center;
+   justify-content: flex-end;
+}
+@media (min-width: 780px){
+	.board{
+		flex-wrap: nowrap;
+	}
+}
