@@ -62,3 +62,29 @@ export const fetchUpdateCard = (id, title, description) => async (dispatch) => {
    const modifiedCard = await CardsRequests.updateCard(id, title, description);
    dispatch(editTask(modifiedCard));
 };
+
+export const fetchMoveTaskLeft =
+   ({ id, status }, statusTypes) =>
+   async (dispatch) => {
+      const idStatus = statusTypes.findIndex(
+         (statusType) => statusType === status
+      );
+      const newStatus =
+         idStatus !== 0 ? statusTypes[idStatus - 1] : statusTypes[0];
+      const result = await CardsRequests.updateStatusCard(id, newStatus);
+      dispatch(changeStatus(result));
+   };
+
+export const fetchMoveTaskRight =
+   ({ id, status }, statusTypes) =>
+   async (dispatch) => {
+      const idStatus = statusTypes.findIndex(
+         (statusType) => statusType === status
+      );
+      const newStatus =
+         idStatus !== statusTypes.length - 1
+            ? statusTypes[idStatus + 1]
+            : statusTypes[statusTypes.length - 1];
+      const result = await CardsRequests.updateStatusCard(id, newStatus);
+      dispatch(changeStatus(result));
+   };

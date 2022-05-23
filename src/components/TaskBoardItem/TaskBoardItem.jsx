@@ -3,7 +3,7 @@ import TaskCard from "../TaskCard";
 import "./style.css";
 import CreateCard from "../CreateCard";
 
-function TaskBoardItem({ title, value, changeTaskStatus, taskByStatus}) {
+function TaskBoardItem({ title, value, taskByStatus}) {
 	const [isOpened, setIsOpened] = useState(false);
 
 	return (
@@ -20,7 +20,7 @@ function TaskBoardItem({ title, value, changeTaskStatus, taskByStatus}) {
 			</div>
 			{
 				taskByStatus.map((task) => 
-					<TaskCard key={task.id} changeTaskStatus={changeTaskStatus} task={task}/>)
+					<TaskCard key={task.id} task={task}/>)
 			}
 		</div>
 	);

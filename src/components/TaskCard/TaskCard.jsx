@@ -1,18 +1,26 @@
 import React, { useState } from 'react'
 import EditCard from '../EditCard';
-import { useDispatch } from "react-redux";
-import { changeStatus, fetchRemoveCard } from '../../redux/cardsActions'
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMoveTaskLeft,fetchMoveTaskRight, fetchRemoveCard } from '../../redux/cardsActions'
 import "./style.css";
 
 
-export function TaskCard({task, changeTaskStatus}) {
+export function TaskCard({task}) {
 	const dispatch = useDispatch();
 	const [isEditing, setIsEditing] = useState(false);
-
+	const statusTypes = useSelector(({ statusesReducer }) => statusesReducer.statuses).map(status => status.value);
+	
 	function handleClickDel(){
 		dispatch(fetchRemoveCard(task.id))
 		setIsEditing(false)
 	}
+	function handleMoveTaskLeft(){
+		dispatch(fetchMoveTaskLeft(task, statusTypes));
+	}
+	function handleMoveTaskRight(){
+		dispatch(fetchMoveTaskRight(task, statusTypes));
+	}
+
 
 	return (
 		<div className="card">
@@ -31,11 +39,7 @@ export function TaskCard({task, changeTaskStatus}) {
 						{
 						(task.status !== 'to_do') ? 
 							<button type="button" name="prev" className="card__button button card__button-prev" 
-								onClick={()=>
-									changeTaskStatus.prev(task.id,task.status)
-										.then((res)=>dispatch(changeStatus(res)))	
-								}
-							>
+								onClick={handleMoveTaskLeft}>
 								prev
 							</button>
 							: null
@@ -43,10 +47,7 @@ export function TaskCard({task, changeTaskStatus}) {
 						{
 						(task.status !== 'done') ? 
 							<button type="button" name="done" className="card__button button card__button-done" 
-								onClick={()=>
-									changeTaskStatus.next(task.id,task.status)
-										.then((res)=>dispatch(changeStatus(res)))
-								}>
+								onClick={handleMoveTaskRight}>
 								done
 							</button>
 							: null
