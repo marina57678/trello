@@ -4,7 +4,6 @@ import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
 import TaskBoard from "./TaskBoard";
 import UserStorage from "../utils/UserStorage.js";
-import { TasksProvider } from "./TaskContext";
 import "../styles/style.css";
 
 export function App() {
@@ -56,11 +55,9 @@ export function App() {
                onClickToBoard={handleTaskBoard}
             />
          )}
-         <TasksProvider>
-            {isLogin && isRegister && (
-               <TaskBoard onClickToLogout={handleToggleRegLogin} />
-            )}
-         </TasksProvider>
+         {isLogin && isRegister && (
+            <TaskBoard onClickToLogout={handleToggleRegLogin} />
+         )}
       </>
    );
 }

@@ -1,28 +1,23 @@
 import React, { useState, useEffect} from "react";
-import "./style.css";
+import { useDispatch, useSelector } from "react-redux";
 import TaskBoardItem from "../TaskBoardItem/TaskBoardItem";
-import StatusRequest from "../../services/StatusRequest";
 import { movingСard } from "../../utils/movingСard";
 import ExitButton from "../ExitButton"
-import {useTasks} from "../TaskContext"
-import { store } from "../TasksStore";
-import CardsRequests from "../../services/CardsRequests";
-import { setTaskFromList } from "../actions";
+import { fetchCards } from '../../redux/cardsActions';
+import { fetchStatuses } from "../../redux/statusesActions";
+import "./style.css";
 
 function TaskBoard({onClickToLogout}) {
+	const dispatch = useDispatch();
 	const [isLoading, setIsLoading] = useState(true);
-	const [statuses, setStatuses] = useState([]);
 	const [movingTask, setMovingTask] = useState(()=>{});
-	const tasks = useTasks();
+	const { tasksList } = useSelector(({ cardsReducer }) => cardsReducer);
+	const {statuses, isLoadedStatuses } = useSelector(({ statusesReducer }) => statusesReducer);
 
+	
 	useEffect(() => {
-		async function fetchData() {
-			const responseStatus = await StatusRequest.loadStatuses()
-			setStatuses(responseStatus);
-			const responseTasks = await CardsRequests.loadAllCards();
-			store.dispatch(setTaskFromList(responseTasks));
-		}
-		fetchData();
+		dispatch(fetchStatuses())
+		dispatch(fetchCards())
 	}, []);
 
 	useEffect(() => {
@@ -33,12 +28,10 @@ function TaskBoard({onClickToLogout}) {
 		}
 	}, [statuses]);
 
-
 	function getTaskByStatus(status) {
-		const taskByStatus = tasks.tasksList.filter(task=>task.status === status)
-		return taskByStatus
+		return tasksList.filter(task=>task.status === status)
 	}
-
+	
 	return (
 		<>
 			<div className="header">

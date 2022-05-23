@@ -1,18 +1,15 @@
 import React, { useState } from 'react'
+import { useDispatch } from "react-redux";
+import { fetchAddCard } from '../../redux/cardsActions';
 import "./style.css";
-import CardsRequests from "../../services/CardsRequests"
-import { useDispatch } from "../TaskContext";
-import { addTaskToList } from "../actions";
-
 
 export function CreateCard({ onChange, status }) {
+	const dispatch = useDispatch()
 	const [submit,setSubmit] = useState(false)
 	const [data,setData] = useState({
 		title : '',
 		description : ''
 	})
-
-	const dispatch = useDispatch()
 
 	function handleOpenForm(bool){
 		setData({
@@ -34,15 +31,9 @@ export function CreateCard({ onChange, status }) {
 		event.preventDefault();
 
 		setSubmit(true)
-		CardsRequests.addCard(data.title,data.description, status)
-		.then((newCard)=>{
-			dispatch(addTaskToList(newCard));
-			setSubmit(false)
-			handleOpenForm(false)
-		})
-
-		// setSubmit(false)
-		// handleOpenForm(false)
+		dispatch(fetchAddCard(data.title,data.description, status))
+		setSubmit(false)
+		handleOpenForm(false)
 	}
 
 	return (
@@ -63,7 +54,7 @@ export function CreateCard({ onChange, status }) {
 					cancel
 				</button>
 				<button type="submit" className="card__button button card__button-done" 
-					disabled={submit ? true:false}>
+					disabled={submit ? true : false}>
 					create
 				</button>
 			</span>

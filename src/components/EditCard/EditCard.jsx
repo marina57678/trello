@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import CardsRequests from "../../services/CardsRequests"
-import { useDispatch } from "../TaskContext";
-import { editTask } from "../actions";
+import { useDispatch } from "react-redux";
+import { fetchUpdateCard } from '../../redux/cardsActions';
+
 import "./style.css";
 
 export function EditCard({isEditing,id,title,description}) {
@@ -21,11 +21,8 @@ export function EditCard({isEditing,id,title,description}) {
 
 	function onSubmit(){
 		setSubmit(true)
-		CardsRequests.updateCard(id, editedData.title, editedData.description)
-			.then((modifiedCard)=>{
-				dispatch(editTask(modifiedCard));
-				isEditing(false)
-			})
+		dispatch(fetchUpdateCard(id, editedData.title, editedData.description));
+		isEditing(false)
 	}
 
 	return (
@@ -38,7 +35,7 @@ export function EditCard({isEditing,id,title,description}) {
 				<button type="button" className="card__button button card__button-cancel"
 					onClick={() => isEditing(false)}>cancel</button>
 				<button type="button" className="card__button button card__button-edit" 
-					onClick={onSubmit} disabled={submit} >edit</button>
+					onClick={onSubmit} disabled={submit}>edit</button>
 			</span>
 		</form>
 	)

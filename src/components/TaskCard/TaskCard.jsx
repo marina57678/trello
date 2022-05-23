@@ -1,20 +1,16 @@
 import React, { useState } from 'react'
 import EditCard from '../EditCard';
-import CardsRequests from "../../services/CardsRequests"
-import { useDispatch } from '../TaskContext'
-import { removeTaskFromList, changeStatus } from '../actions'
+import { useDispatch } from "react-redux";
+import { changeStatus, fetchRemoveCard } from '../../redux/cardsActions'
 import "./style.css";
 
 
 export function TaskCard({task, changeTaskStatus}) {
-	const [isEditing, setIsEditing] = useState(false);
 	const dispatch = useDispatch();
+	const [isEditing, setIsEditing] = useState(false);
 
 	function handleClickDel(){
-		CardsRequests.deleteCard(task.id)
-			.then((el)=>{
-				dispatch(removeTaskFromList(el.id))
-			});
+		dispatch(fetchRemoveCard(task.id))
 		setIsEditing(false)
 	}
 
@@ -23,8 +19,7 @@ export function TaskCard({task, changeTaskStatus}) {
 			<button type="button" className="button-del button card__button-del" 
 				onClick = {handleClickDel}>x</button>
 			{
-				isEditing ? <EditCard isEditing={setIsEditing} {...task} /> 
-					:
+				isEditing ? <EditCard isEditing={setIsEditing} {...task} /> :
 					<>
 						<span className="card__title">{task.title}</span>
 						<p className="card__text">{task.description}</p>
@@ -34,7 +29,7 @@ export function TaskCard({task, changeTaskStatus}) {
 								edit
 							</button>
 						{
-						(task.status !== 'to_do')	? 
+						(task.status !== 'to_do') ? 
 							<button type="button" name="prev" className="card__button button card__button-prev" 
 								onClick={()=>
 									changeTaskStatus.prev(task.id,task.status)
@@ -46,13 +41,12 @@ export function TaskCard({task, changeTaskStatus}) {
 							: null
 						}
 						{
-						(task.status !== 'done')	? 
+						(task.status !== 'done') ? 
 							<button type="button" name="done" className="card__button button card__button-done" 
 								onClick={()=>
 									changeTaskStatus.next(task.id,task.status)
 										.then((res)=>dispatch(changeStatus(res)))
-								}
-							>
+								}>
 								done
 							</button>
 							: null
