@@ -5,6 +5,7 @@ import ExitButton from "../ExitButton"
 import { fetchCards } from '../../redux/cardsActions';
 import { fetchStatuses } from "../../redux/statusesActions";
 import "./style.css";
+import { useCallback } from "react";
 
 function TaskBoard({onClickToLogout}) {
 	const dispatch = useDispatch();
@@ -16,10 +17,11 @@ function TaskBoard({onClickToLogout}) {
 		dispatch(fetchCards())
 	}, []);
 
-	function getTaskByStatus(status) {
-		return tasksList.filter(task=>task.status === status)
-	}
-
+	// function getTaskByStatus(status) {
+	// 	return tasksList.filter(task=>task.status === status)
+	// }
+	const getTaskByStatus = useCallback((status)=> tasksList.filter(task=>task.status === status)
+	, [tasksList])
 	return (
 		<>
 			<div className="header">

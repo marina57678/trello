@@ -1,57 +1,72 @@
-import React, { useState } from 'react'
-import EditCard from '../EditCard';
+import React, { useState, memo, useCallback} from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMoveTaskLeft,fetchMoveTaskRight, fetchRemoveCard } from '../../redux/cardsActions'
+
+import { fetchMoveTaskLeft, fetchMoveTaskRight, fetchRemoveCard } from '../../redux/cardsActions'
+import { Button } from '../Button';
+import EditCard from '../EditCard';
+
 import "./style.css";
 
 
 export function TaskCard({task}) {
 	const dispatch = useDispatch();
 	const [isEditing, setIsEditing] = useState(false);
+
 	const statusTypes = useSelector(({ statusesReducer }) => statusesReducer.statuses).map(status => status.value);
 	
-	function handleClickDel(){
+	const handleClickDel = useCallback(()=>{
 		dispatch(fetchRemoveCard(task.id))
 		setIsEditing(false)
-	}
-	function handleMoveTaskLeft(){
-		dispatch(fetchMoveTaskLeft(task, statusTypes));
-	}
-	function handleMoveTaskRight(){
-		dispatch(fetchMoveTaskRight(task, statusTypes));
-	}
+	},[])
 
+	const handleMoveTaskLeft = useCallback(()=>{
+		dispatch(fetchMoveTaskLeft(task, statusTypes));
+	},[])
+
+	const handleMoveTaskRight = useCallback(()=>{
+		dispatch(fetchMoveTaskRight(task, statusTypes));
+	},[])
+
+	const setIsEditingTrue = useCallback(()=>{
+		setIsEditing(true);
+	},[])
 
 	return (
 		<div className="card">
-			<button type="button" className="button-del button card__button-del" 
-				onClick = {handleClickDel}>x</button>
+			<Button 
+				className="button-del button card__button-del" 
+				onClick = {handleClickDel}
+				value="x"
+			/>
 			{
 				isEditing ? <EditCard isEditing={setIsEditing} {...task} /> :
 					<>
 						<span className="card__title">{task.title}</span>
 						<p className="card__text">{task.description}</p>
 						<span className="card__buttons">
-							<button type="button" className="card__button button card__button-upg" 
-								onClick={() => setIsEditing(true)}>
-								edit
-							</button>
-						{
-						(task.status !== 'to_do') ? 
-							<button type="button" name="prev" className="card__button button card__button-prev" 
-								onClick={handleMoveTaskLeft}>
-								prev
-							</button>
-							: null
-						}
-						{
-						(task.status !== 'done') ? 
-							<button type="button" name="done" className="card__button button card__button-done" 
-								onClick={handleMoveTaskRight}>
-								done
-							</button>
-							: null
-						}
+							<Button 
+								className="card__button button card__button-upg" 
+								onClick = {setIsEditingTrue}
+								value="edit"
+							/>
+							{
+							(task.status !== 'to_do') ? 
+								<Button 
+									className="card__button button card__button-prev" 
+									onClick = {handleMoveTaskLeft}
+									value="prev"
+								/>
+								: null
+							}
+							{
+							(task.status !== 'done') ? 
+								<Button 
+									className="card__button button card__button-done" 
+									onClick = {handleMoveTaskRight}
+									value="done"
+								/>
+								: null
+							}
 						</span>
 					</>
 			}
@@ -59,4 +74,4 @@ export function TaskCard({task}) {
 		);
 }
 
-export default TaskCard;
+export default memo(TaskCard);

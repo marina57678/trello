@@ -12,11 +12,6 @@ export function CreateCard({ onChange, status }) {
 	})
 
 	function handleOpenForm(bool){
-		setData({
-			...data,
-			title : '',
-			description : ''
-		})
 		onChange(bool)
 	}
 
@@ -33,6 +28,7 @@ export function CreateCard({ onChange, status }) {
 		setSubmit(true)
 		dispatch(fetchAddCard(data.title,data.description, status))
 		setSubmit(false)
+		// onChange(bool)
 		handleOpenForm(false)
 	}
 
@@ -41,20 +37,33 @@ export function CreateCard({ onChange, status }) {
 			<span className="card__title-large">Add note</span>
 
 			<label className="card__label">title</label>
-			<input name="title" className="card__input input-title" type="text" 
-				onChange = {updField}/>
+			<input 
+				name="title" 
+				className="card__input input-title" 
+				type="text" 
+				onChange = {updField}
+			/>
 
 			<label className="card__label">description</label>
-			<textarea name="description" className="card__input input-description" type="text" 
-				onChange = {updField} />
+			<textarea 
+				name="description" 
+				className="card__input input-description"
+				type="text" 
+				onChange = {updField}
+			/>
 
 			<span className="card__buttons">
-				<button type="button" className="card__button button card__button-cancel"
+				<button 
+					type="button"
+					className="card__button button card__button-cancel"
 					onClick = {()=>handleOpenForm(false)}>
 					cancel
 				</button>
-				<button type="submit" className="card__button button card__button-done" 
-					disabled={submit ? true : false}>
+				<button 
+					type="submit" 
+					className="card__button button card__button-done" 
+					disabled={submit}
+				>
 					create
 				</button>
 			</span>
