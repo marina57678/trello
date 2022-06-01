@@ -29,22 +29,12 @@ export function App() {
       }
    }
 
-   // temporary function
-
-   function handleTaskBoard() {
-      setIsRegister(true);
-      setIsLogin(true);
-   }
-
-   // temporary function ended
-
    return (
       <>
          {!isRegister && (
             <RegisterForm
                onSubmitRegister={handleSubmitRegister}
                onClickToLogin={handleToggleRegLogin}
-               onClickToBoard={handleTaskBoard}
             />
          )}
 
@@ -52,7 +42,6 @@ export function App() {
             <LoginForm
                onSubmitLogin={handleSubmitLogin}
                onClickToRegistration={handleToggleRegLogin}
-               onClickToBoard={handleTaskBoard}
             />
          )}
          {isLogin && isRegister && (

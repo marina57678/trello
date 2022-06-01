@@ -11,7 +11,6 @@ let user = {
 export function LoginForm({
   onSubmitLogin,
   onClickToRegistration,
-  onClickToBoard,
 }) {
   const [login, setLogin] = useState(() => {
     return {
@@ -92,17 +91,6 @@ export function LoginForm({
         >
           Start here
         </button>{" "}
-      </p>
-      <p>
-        Don't want login?{" "}
-        <button
-          type="button"
-          onClick={() => {
-            onClickToBoard();
-          }}
-        >
-          Come in!
-        </button>
       </p>
     </>
   );

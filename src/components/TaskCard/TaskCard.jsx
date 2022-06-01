@@ -12,7 +12,7 @@ export function TaskCard({task}) {
 	const dispatch = useDispatch();
 	const [isEditing, setIsEditing] = useState(false);
 
-	const statusTypes = useSelector(({ statusesReducer }) => statusesReducer.statuses).map(status => status.value);
+	const statusTypes = useSelector(({ statuses }) => statuses.data).map(status => status.value);
 	
 	const handleClickDel = useCallback(()=>{
 		dispatch(fetchRemoveCard(task.id))
@@ -27,9 +27,14 @@ export function TaskCard({task}) {
 		dispatch(fetchMoveTaskRight(task, statusTypes));
 	},[])
 
-	const setIsEditingTrue = useCallback(()=>{
+	const handleCloseEditForm = useCallback(()=>{
+		setIsEditing(false);
+	},[])
+
+	const handleOpenEditForm = useCallback(()=>{
 		setIsEditing(true);
 	},[])
+
 
 	return (
 		<div className="card">
@@ -39,14 +44,14 @@ export function TaskCard({task}) {
 				value="x"
 			/>
 			{
-				isEditing ? <EditCard isEditing={setIsEditing} {...task} /> :
+				isEditing ? <EditCard handleCloseEditForm={handleCloseEditForm} {...task} /> :
 					<>
 						<span className="card__title">{task.title}</span>
 						<p className="card__text">{task.description}</p>
 						<span className="card__buttons">
 							<Button 
 								className="card__button button card__button-upg" 
-								onClick = {setIsEditingTrue}
+								onClick = {handleOpenEditForm}
 								value="edit"
 							/>
 							{

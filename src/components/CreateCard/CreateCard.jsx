@@ -1,21 +1,18 @@
 import React, { useState } from 'react'
 import { useDispatch } from "react-redux";
 import { fetchAddCard } from '../../redux/cardsActions';
+import { Button } from '../Button';
 import "./style.css";
 
-export function CreateCard({ onChange, status }) {
+export function CreateCard({ handleCloseForm, status }) {
 	const dispatch = useDispatch()
-	const [submit,setSubmit] = useState(false)
+	
 	const [data,setData] = useState({
 		title : '',
 		description : ''
 	})
 
-	function handleOpenForm(bool){
-		onChange(bool)
-	}
-
-	function updField(e){
+	const updField = (e) =>{
 		setData({
 			...data,
 			[e.target.name]: e.target.value
@@ -25,15 +22,12 @@ export function CreateCard({ onChange, status }) {
 	function onSubmit(event){
 		event.preventDefault();
 
-		setSubmit(true)
-		dispatch(fetchAddCard(data.title,data.description, status))
-		setSubmit(false)
-		// onChange(bool)
-		handleOpenForm(false)
+		dispatch(fetchAddCard(data, status))
+		handleCloseForm()
 	}
 
 	return (
-		<form className="card card-create" onSubmit={onSubmit}>
+		<form className="card card-create">
 			<span className="card__title-large">Add note</span>
 
 			<label className="card__label">title</label>
@@ -53,19 +47,17 @@ export function CreateCard({ onChange, status }) {
 			/>
 
 			<span className="card__buttons">
-				<button 
-					type="button"
-					className="card__button button card__button-cancel"
-					onClick = {()=>handleOpenForm(false)}>
-					cancel
-				</button>
-				<button 
-					type="submit" 
+				<Button 
+					className="card__button button card__button-cancel" 
+					onClick = {handleCloseForm}
+					value="cancel"
+				/>
+					<Button
+					type="submit"
 					className="card__button button card__button-done" 
-					disabled={submit}
-				>
-					create
-				</button>
+					onClick = {onSubmit}
+					value="create"
+				/>
 			</span>
 		</form>
 		);

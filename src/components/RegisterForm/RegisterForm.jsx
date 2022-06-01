@@ -10,7 +10,6 @@ let user = {
 export function RegisterForm({
   onSubmitRegister,
   onClickToLogin,
-  onClickToBoard,
 }) {
   const [register, setRegister] = useState(() => {
     return {
@@ -114,17 +113,6 @@ export function RegisterForm({
           }}
         >
           Log in
-        </button>
-      </p>
-      <p>
-        Don't want register?{" "}
-        <button
-          type="button"
-          onClick={() => {
-            onClickToBoard();
-          }}
-        >
-          Come in!
         </button>
       </p>
     </>

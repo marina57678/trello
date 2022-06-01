@@ -8,15 +8,18 @@ import { useCallback } from 'react';
 function TaskBoardItem({ title, value, taskByStatus}) {
 	const [isOpened, setIsOpened] = useState(false);
 
-	const setIsOpenedTrue = useCallback(()=>{
+	const handleOpenForm = useCallback(()=>{
 		setIsOpened(true);
 	},[])
+	
+	const handleCloseForm = useCallback(()=>{
+		setIsOpened(false);
+	},[])
 
-	console.log("rerender")
 	return (
 		<div className={`task-board__item item-${value}`}>
 			{
-				isOpened ? <CreateCard onChange={setIsOpened}  status={value}/> : null
+				isOpened ? <CreateCard handleCloseForm={handleCloseForm}  status={value}/> : null
 			}
 			<div className={`status status-${value}`}>
 				<span className="item__text">
@@ -25,7 +28,7 @@ function TaskBoardItem({ title, value, taskByStatus}) {
 				</span>
 				<Button 
 					className="status__button status__button-add" 
-					onClick = {setIsOpenedTrue}
+					onClick = {handleOpenForm}
 					value="+"
 				/>
 			</div>

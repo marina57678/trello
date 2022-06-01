@@ -9,9 +9,10 @@ import thunk from "redux-thunk";
 import cardsReducer from "./cardsReducer";
 import statusesReducer from "./statusesReducer";
 
+console.log(statusesReducer);
 const rootReducer = combineReducers({
-   cardsReducer,
-   statusesReducer,
+   cards: cardsReducer,
+   statuses: statusesReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

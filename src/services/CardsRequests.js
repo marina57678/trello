@@ -19,13 +19,13 @@ class CardsRequests {
       return card;
    }
 
-   async addCard(title, description, status) {
+   async addCard({ title, description }, status) {
       const data = {
          title,
          description,
          status,
       };
-
+      console.log("title" + title);
       const newCard = await HTTPService.request({
          method: "POST",
          path: `/cards`,

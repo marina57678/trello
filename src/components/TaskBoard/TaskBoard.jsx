@@ -9,19 +9,17 @@ import { useCallback } from "react";
 
 function TaskBoard({onClickToLogout}) {
 	const dispatch = useDispatch();
-	const { tasksList } = useSelector(({ cardsReducer }) => cardsReducer);
-	const {statuses, isLoadedStatuses } = useSelector(({ statusesReducer }) => statusesReducer);
+	const cards = useSelector(({ cards }) => cards);
+	const statuses  = useSelector(({ statuses }) => statuses);
 
 	useEffect(() => {
 		dispatch(fetchStatuses())
 		dispatch(fetchCards())
 	}, []);
 
-	// function getTaskByStatus(status) {
-	// 	return tasksList.filter(task=>task.status === status)
-	// }
-	const getTaskByStatus = useCallback((status)=> tasksList.filter(task=>task.status === status)
-	, [tasksList])
+
+	const getTaskByStatus = useCallback((status)=> cards.data.filter(task=>task.status === status)
+	, [cards.data])
 	return (
 		<>
 			<div className="header">
@@ -29,7 +27,7 @@ function TaskBoard({onClickToLogout}) {
 			</div>
 			<div className="board">
 				{
-					isLoadedStatuses ? statuses.map((status, index) => (
+					statuses.isLoaded ? statuses.data.map((status, index) => (
 						<TaskBoardItem key={index} 
 							taskByStatus = {getTaskByStatus(status.value)} {...status} />
 						))

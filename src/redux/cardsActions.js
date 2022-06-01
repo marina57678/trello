@@ -1,50 +1,56 @@
 import CardsRequests from "../services/CardsRequests";
 
-export function inputNumber(number) {
+export const SET_TASKLIST = "SET_TASKLIST";
+export const IS_LOADED_TASKLIST = "IS_LOADED_TASKLIST";
+export const REMOVE_TASK = "REMOVE_TASK";
+export const ADD_TASKLIST = "ADD_TASKLIST";
+export const EDIT_TASKLIST = "EDIT_TASKLIST";
+export const CHANGE_STATUS_TASKLIST = "CHANGE_STATUS_TASKLIST";
+
+export function setTaskList(tasksList) {
    return {
-      type: "INPUT_NUMBER",
-      payload: number,
+      type: SET_TASKLIST,
+      payload: tasksList,
    };
 }
+
+export const isLoadedTaskList = (bool) => ({
+   type: IS_LOADED_TASKLIST,
+   payload: bool,
+});
 
 export function removeTaskFromList(id) {
    return {
-      type: "REMOVE_TASK",
+      type: REMOVE_TASK,
       payload: id,
-   };
-}
-
-export function setTaskFromList(tasksList) {
-   return {
-      type: "SET_TASKLIST",
-      payload: tasksList,
    };
 }
 
 export function addTaskToList(newTasksList) {
    return {
-      type: "ADD_TASKLIST",
+      type: ADD_TASKLIST,
       payload: newTasksList,
    };
 }
 
 export function editTask(modifiedCard) {
    return {
-      type: "EDIT_TASKLIST",
+      type: EDIT_TASKLIST,
       payload: modifiedCard,
    };
 }
 
 export function changeStatus(modifiedCard) {
    return {
-      type: "CHANGE_STATUS_TASKLIST",
+      type: CHANGE_STATUS_TASKLIST,
       payload: modifiedCard,
    };
 }
 
 export const fetchCards = () => async (dispatch) => {
+   dispatch(isLoadedTaskList(false));
    const responseTasks = await CardsRequests.loadAllCards();
-   dispatch(setTaskFromList(responseTasks));
+   dispatch(setTaskList(responseTasks));
 };
 
 export const fetchRemoveCard = (id) => async (dispatch) => {
@@ -52,11 +58,10 @@ export const fetchRemoveCard = (id) => async (dispatch) => {
    dispatch(removeTaskFromList(id));
 };
 
-export const fetchAddCard =
-   (title, description, status) => async (dispatch) => {
-      const newCard = await CardsRequests.addCard(title, description, status);
-      dispatch(addTaskToList(newCard));
-   };
+export const fetchAddCard = (data, status) => async (dispatch) => {
+   const newCard = await CardsRequests.addCard(data, status);
+   dispatch(addTaskToList(newCard));
+};
 
 export const fetchUpdateCard = (id, title, description) => async (dispatch) => {
    const modifiedCard = await CardsRequests.updateCard(id, title, description);
